@@ -29,4 +29,19 @@ const userCreateValidation = (): ValidationChain[] => {
   ]
 }
 
-export { userCreateValidation }
+const loginValidation = (): ValidationChain[] => {
+  return [
+    body('email')
+      .isString()
+      .withMessage('O e-mail é obrigatório.')
+      .isEmail()
+      .withMessage('Insira um e-mail válido.'),
+    body('password')
+      .isString()
+      .withMessage('O senha é obrigatória.')
+      .isLength({ min: 8 })
+      .withMessage('A senha precisa de no mínimo 8 caracteres.')
+  ]
+}
+
+export { userCreateValidation, loginValidation }
