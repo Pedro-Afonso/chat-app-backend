@@ -1,14 +1,14 @@
 import mongoose, { Schema, Types } from 'mongoose'
 
 export interface IUser {
-  _id?: Types.ObjectId
+  _id: Types.ObjectId
   name: string
   email: string
   password: string
-  profileImage: string
-  bio: string
-  createdAt?: Date
-  updatedAt?: Date
+  profileImage?: string
+  bio?: string
+  createdAt: Date
+  updatedAt: Date
   __v?: number
 }
 
