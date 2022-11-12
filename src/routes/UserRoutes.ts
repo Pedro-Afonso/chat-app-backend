@@ -4,9 +4,11 @@ import express from 'express'
 import { register } from '../controllers/UserController'
 
 // Middlewares
+import { handleValidations } from '../middlewares/handleValidations'
+import { userCreateValidation } from '../middlewares/userValidation'
 
 const router = express()
 
-router.post('/register', register)
+router.post('/register', userCreateValidation(), handleValidations, register)
 
 export { router as UserRoutes }
