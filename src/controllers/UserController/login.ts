@@ -5,7 +5,11 @@ import 'dotenv/config'
 import { generateToken } from '../../utils'
 import { UserModel } from '../../models/UserModel'
 
-// Sign user in
+/**
+  @description     Sign user in
+  @route           GET /api/users/login
+  @access          Public
+ */
 export const login = async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body
 

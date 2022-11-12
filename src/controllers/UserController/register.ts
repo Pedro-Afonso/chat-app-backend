@@ -3,7 +3,11 @@ import { Request, Response } from 'express'
 import { hashPassword, generateToken } from '../../utils'
 import { UserModel } from '../../models/UserModel'
 
-// Register user
+/**
+  @description     Register a user
+  @route           POST /api/users/register
+  @access          Public
+ */
 export const register = async (req: Request, res: Response): Promise<void> => {
   const { name, email, password } = req.body
 
