@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import 'dotenv/config'
+import { router } from './src/routes/Router'
 
 const port = process.env.PORT || '5000'
 const app = express()
@@ -20,6 +21,8 @@ app.use(cors())
 app.get('/', (req: Request, res: Response) => {
   res.send(`API is working!`)
 })
+
+app.use(router)
 
 // Connect to mongoDB database
 if (dbUri) {
