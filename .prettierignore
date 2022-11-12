@@ -1,0 +1,12 @@
+dist
+.jest
+src/ui/assets/*
+yarn.lock
+.gitattributes
+.gitignore
+.eslintignore
+coverage
+
+.env
+.eslintrc
+tsconfig.json
