@@ -6,7 +6,8 @@ import {
   getAllChatsByUser,
   createGroupChat,
   renameGroupChat,
-  addToGroup
+  addToGroup,
+  removeFromGroup
 } from '../controllers/ChatController'
 
 // Middlewares
@@ -40,5 +41,6 @@ router.put(
 )
 
 router.put('/group/:groupId/users/:userId', authGuard, addToGroup)
+router.delete('/group/:groupId/users/:userId', authGuard, removeFromGroup)
 
 export { router as ChatRoutes }
