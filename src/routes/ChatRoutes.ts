@@ -1,8 +1,11 @@
 import express from 'express'
 
 // Controllers
-import { accessChat, getAllChatsByUser } from '../controllers/ChatController'
-import { createGroupChat } from '../controllers/ChatController/createGroupChat'
+import {
+  accessChat,
+  getAllChatsByUser,
+  createGroupChat
+} from '../controllers/ChatController'
 
 // Middlewares
 import { authGuard } from '../middlewares/authGuard'
