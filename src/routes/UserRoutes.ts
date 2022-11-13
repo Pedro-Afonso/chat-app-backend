@@ -15,6 +15,6 @@ const router = express()
 
 router.post('/login', loginValidation(), handleValidations, login)
 router.get('/search', authGuard, searchUsers)
-router.post('/register', userCreateValidation(), handleValidations, register)
+router.post('/', userCreateValidation(), handleValidations, register)
 
 export { router as UserRoutes }
