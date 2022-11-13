@@ -12,5 +12,13 @@ const createGroupChatValidation = (): ValidationChain[] => {
       .withMessage('Por favor, preencha todos os campos.')
   ]
 }
+const renameGroupChatValidation = (): ValidationChain[] => {
+  return [
+    body('newChatName')
+      .not()
+      .isEmpty()
+      .withMessage('Por favor, preencha todos os campos.')
+  ]
+}
 
-export { createGroupChatValidation }
+export { createGroupChatValidation, renameGroupChatValidation }
