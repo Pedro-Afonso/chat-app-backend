@@ -21,4 +21,4 @@ const messageSchema = new Schema(
   { timestamps: true }
 )
 
-export const MessageModel = model<IMessage>('Chat', messageSchema)
+export const MessageModel = model<IMessage>('Message', messageSchema)
