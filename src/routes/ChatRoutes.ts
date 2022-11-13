@@ -4,12 +4,16 @@ import express from 'express'
 import {
   accessChat,
   getAllChatsByUser,
-  createGroupChat
+  createGroupChat,
+  renameGroupChat
 } from '../controllers/ChatController'
 
 // Middlewares
 import { authGuard } from '../middlewares/authGuard'
-import { createGroupChatValidation } from '../middlewares/chatValidation'
+import {
+  createGroupChatValidation,
+  renameGroupChatValidation
+} from '../middlewares/chatValidation'
 import { handleValidations } from '../middlewares/handleValidations'
 
 const router = express()
@@ -24,6 +28,14 @@ router.post(
   createGroupChatValidation(),
   handleValidations,
   createGroupChat
+)
+
+router.put(
+  '/group/:id',
+  authGuard,
+  renameGroupChatValidation(),
+  handleValidations,
+  renameGroupChat
 )
 
 export { router as ChatRoutes }
