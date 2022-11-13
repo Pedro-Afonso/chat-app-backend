@@ -7,7 +7,7 @@ import { UserModel } from '../../models/UserModel'
 
 /**
   @description     Sign user in
-  @route           GET /api/users/login
+  @route           POST /api/users/login
   @access          Public
  */
 export const login = async (req: Request, res: Response): Promise<void> => {

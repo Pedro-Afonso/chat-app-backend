@@ -13,7 +13,7 @@ import { authGuard } from '../middlewares/authGuard'
 
 const router = express()
 
-router.get('/login', loginValidation(), handleValidations, login)
+router.post('/login', loginValidation(), handleValidations, login)
 router.get('/search', authGuard, searchUsers)
 router.post('/register', userCreateValidation(), handleValidations, register)
 
