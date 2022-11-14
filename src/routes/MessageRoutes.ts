@@ -1,7 +1,10 @@
 import express from 'express'
 
 // Controllers
-import { sendMessage } from '../controllers/MessageController'
+import {
+  sendMessage,
+  getAllMessagesByChat
+} from '../controllers/MessageController'
 
 // Middlewares
 import { authGuard } from '../middlewares/authGuard'
@@ -9,5 +12,6 @@ import { authGuard } from '../middlewares/authGuard'
 const router = express()
 
 router.post('/', authGuard, sendMessage)
+router.get('/:chatId', authGuard, getAllMessagesByChat)
 
 export { router as MessageRoutes }
