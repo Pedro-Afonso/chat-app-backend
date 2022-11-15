@@ -1,7 +1,12 @@
 import express from 'express'
 
 // Controllers
-import { login, register, searchUsers } from '../controllers/UserController'
+import {
+  login,
+  register,
+  searchUsers,
+  getCurrentUser
+} from '../controllers/UserController'
 
 // Middlewares
 import {
@@ -16,5 +21,6 @@ const router = express()
 router.post('/login', loginValidation(), handleValidations, login)
 router.get('/search', authGuard, searchUsers)
 router.post('/', userCreateValidation(), handleValidations, register)
+router.get('/', authGuard, getCurrentUser)
 
 export { router as UserRoutes }
