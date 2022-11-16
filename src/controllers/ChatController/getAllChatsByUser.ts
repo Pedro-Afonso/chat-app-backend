@@ -17,8 +17,6 @@ export const getAllChatsByUser = async (req: Request, res: Response) => {
   const filterOptions = { users: { $in: req.user._id } }
 
   const populateOptions = [
-    { path: 'users', select: '-password' },
-    { path: 'groupAdmin', select: '-password' },
     {
       path: 'latestMessage',
       populate: { path: 'sender', select: 'name profileImage email' }
