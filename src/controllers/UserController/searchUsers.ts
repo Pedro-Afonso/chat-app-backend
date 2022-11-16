@@ -27,8 +27,11 @@ export const searchUsers = async (
     return
   }
 
-  const users = await UserModel.find(keyword).find({
-    _id: { $ne: req.user._id }
-  })
+  const users = await UserModel.find(keyword)
+    .find({
+      _id: { $ne: req.user._id }
+    })
+    .select('-password')
+
   res.status(200).json(users)
 }
