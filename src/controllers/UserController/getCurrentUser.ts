@@ -6,7 +6,7 @@ import { UserModel } from '../../models/UserModel'
 /**
   @description     Get current user profile
   @route           GET /api/users/
-  @access          Public
+  @access          Private
  */
 export const getCurrentUser = async (
   req: Request,
