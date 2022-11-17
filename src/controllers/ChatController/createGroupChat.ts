@@ -9,6 +9,12 @@ import { ChatModel } from '../../models/ChatModel'
 export const createGroupChat = async (req: Request, res: Response) => {
   const users = JSON.parse(req.body.users)
 
+  if (users.length < 2) {
+    res.status(400).json({
+      errors: ['Para criar um grupo você precisa de pelo menos 2 pessoas!']
+    })
+  }
+
   users.push(req.user)
 
   const populateOptions = [
@@ -27,5 +33,7 @@ export const createGroupChat = async (req: Request, res: Response) => {
 
   await groupChat.populate(populateOptions)
 
-  res.status(200).json(groupChat)
+  res
+    .status(201)
+    .json({ chat: groupChat, message: 'Grupo criado com sucesso!' })
 }
