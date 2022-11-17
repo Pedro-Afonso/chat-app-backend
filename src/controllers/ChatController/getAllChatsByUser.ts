@@ -16,36 +16,25 @@ export const getAllChatsByUser = async (req: Request, res: Response) => {
 
   const filterOptions = { users: { $in: req.user._id } }
 
-  const populateOptions1 = [
+  const populateOptions = [
     {
       path: 'latestMessage',
       populate: { path: 'sender', select: '-password' }
     },
-    { path: 'groupAdmin', select: '-password' }
-  ]
-
-  const populateOptions2 = [
-    {
-      path: 'latestMessage',
-      populate: { path: 'sender', select: '-password' }
-    },
+    { path: 'groupAdmin', select: '-password' },
     { path: 'users', select: '-password' }
   ]
 
   const chat = await ChatModel.find(filterOptions)
     .limit(100)
     .sort({ updatedAt: 'desc' })
+    .populate(populateOptions)
     .then(async docs => {
       for (const doc of docs) {
-        if (doc.isGroupChat) {
-          await doc.populate(populateOptions1)
+        if (req.user && doc.users[0] === req.user._id) {
+          doc.users.pop()
         } else {
-          if (req.user && doc.users[0] === req.user._id) {
-            doc.users.pop()
-          } else {
-            doc.users.shift()
-          }
-          await doc.populate(populateOptions2)
+          doc.users.shift()
         }
       }
       return docs
