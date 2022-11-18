@@ -38,5 +38,5 @@ export const renameGroupChat = async (req: Request, res: Response) => {
 
   res
     .status(200)
-    .json({ chat: groupChat, mensagem: 'Nome do grupo alterado com sucesso!' })
+    .json({ chat: groupChat, message: 'Nome do grupo alterado com sucesso!' })
 }
