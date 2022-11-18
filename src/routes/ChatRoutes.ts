@@ -32,6 +32,7 @@ router.post(
   createGroupChat
 )
 
+router.put('/group/:groupId/users/:userId', authGuard, addToGroup)
 router.put(
   '/group/:id',
   authGuard,
@@ -40,7 +41,6 @@ router.put(
   renameGroupChat
 )
 
-router.put('/group/:groupId/users/:userId', authGuard, addToGroup)
 router.delete('/group/:groupId/users/:userId', authGuard, removeFromGroup)
 
 export { router as ChatRoutes }
