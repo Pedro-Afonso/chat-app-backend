@@ -7,7 +7,7 @@ import { ChatModel } from '../../models/ChatModel'
   @access          Private
  */
 export const createGroupChat = async (req: Request, res: Response) => {
-  const users = JSON.parse(req.body.users)
+  const users = req.body.users
 
   if (users.length < 2) {
     res.status(400).json({
