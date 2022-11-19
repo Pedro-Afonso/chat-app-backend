@@ -50,7 +50,8 @@ export const sendMessage = async (req: Request, res: Response) => {
     latestMessage: newMessage._id
   })
 
-  res
-    .status(200)
-    .json({ newMessage, message: 'Mensagem adicionada com sucesso!' })
+  res.status(200).json({
+    chatMessage: newMessage,
+    message: 'Mensagem adicionada com sucesso!'
+  })
 }

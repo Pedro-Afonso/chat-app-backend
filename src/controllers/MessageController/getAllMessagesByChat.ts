@@ -35,5 +35,8 @@ export const getAllMessagesByChat = async (req: Request, res: Response) => {
     return
   }
 
-  res.status(200).json(messages)
+  res.status(200).json({
+    chatMessages: messages,
+    message: 'Mensagens carregadas com sucesso!'
+  })
 }
