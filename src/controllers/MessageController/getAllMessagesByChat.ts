@@ -3,7 +3,7 @@ import { MessageModel } from '../../models/MessageModel'
 
 /**
   @description     Fetch all messages by chat
-  @route           GET /api/messages/:chatId
+  @route           GET /api/messages/chat/:chatId
   @access          Private
  */
 export const getAllMessagesByChat = async (req: Request, res: Response) => {
