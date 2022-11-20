@@ -34,7 +34,7 @@ export const accessChat = async (req: Request, res: Response) => {
 
   const chat = await ChatModel.find(filterOptions).populate(populateOptions)
   if (chat.length > 0) {
-    res.status(200).json({ chat: chat[0] })
+    res.status(200).json({ chat: chat[0], message: 'Diga um Olá!' })
     return
   }
 
@@ -48,5 +48,5 @@ export const accessChat = async (req: Request, res: Response) => {
 
   await createdChat.populate('users', '-password')
 
-  res.status(201).json({ createdChat })
+  res.status(201).json({ chat: createdChat, message: 'Inicie uma conversa.' })
 }
