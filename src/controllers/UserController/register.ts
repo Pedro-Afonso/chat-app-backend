@@ -2,6 +2,14 @@ import { Request, Response } from 'express'
 
 import { hashPassword, generateToken } from '../../utils'
 import { UserModel } from '../../models/UserModel'
+import { cloudinary } from '../../config/cloudinary'
+
+interface IData {
+  name: string
+  email: string
+  password: string
+  profileImage?: string
+}
 
 /**
   @description     Register a user
@@ -26,12 +34,29 @@ export const register = async (req: Request, res: Response): Promise<void> => {
   // Generate password hash
   const passwordHash = await hashPassword(password)
 
-  // Create user
-  const newUser = await UserModel.create({
+  const data: IData = {
     name,
     email,
     password: passwordHash
-  })
+  }
+
+  if (req.file) {
+    try {
+      const uploadedImage = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'chat-app',
+        resource_type: 'image'
+      })
+      data.profileImage = uploadedImage.secure_url
+    } catch {
+      res.status(400).json({
+        errors: ['Houve um erro ao enviar a imagem!']
+      })
+      return
+    }
+  }
+
+  // Create user
+  const newUser = await UserModel.create(data)
 
   // Check if user was created sucessfully
   if (!newUser || !jwtSecret) {

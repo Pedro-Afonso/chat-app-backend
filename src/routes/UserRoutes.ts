@@ -15,12 +15,19 @@ import {
 } from '../middlewares/userValidation'
 import { handleValidations } from '../middlewares/handleValidations'
 import { authGuard } from '../middlewares/authGuard'
+import { imageUpload } from '../middlewares/imageUpload'
 
 const router = express()
 
 router.post('/login', loginValidation(), handleValidations, login)
 router.get('/search', authGuard, searchUsers)
-router.post('/', userCreateValidation(), handleValidations, register)
+router.post(
+  '/',
+  imageUpload.single('profileImage'),
+  userCreateValidation(),
+  handleValidations,
+  register
+)
 router.get('/', authGuard, getCurrentUser)
 
 export { router as UserRoutes }
