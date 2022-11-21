@@ -24,6 +24,7 @@ export const getAllMessagesByChat = async (req: Request, res: Response) => {
   ]
 
   const messages = await MessageModel.find(filterOptions)
+    .limit(50)
     .populate(populateOptions)
     .sort({ updatedAt: 'desc' })
 
