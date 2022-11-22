@@ -19,12 +19,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // Solve Cors
-app.use(
-  cors({
-    origin: 'http://localhost:5173',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
-  })
-)
+app.use(cors())
 
 // Test route
 app.get('/', (req: Request, res: Response) => {
@@ -45,9 +40,21 @@ if (dbUri) {
 
 const httpServer = createServer(app)
 
+const configCorsOrigin = () => {
+  if (process.env.NODE_ENV === 'PRODUCTION') {
+    return [
+      process.env.ALLOWED_ORIGIN_1 || '',
+      process.env.ALLOWED_ORIGIN_2 || '',
+      process.env.ALLOWED_ORIGIN_3 || ''
+    ]
+  } else {
+    return 'http://localhost:5173'
+  }
+}
+
 const io = new Server(httpServer, {
   cors: {
-    origin: 'http://localhost:5173',
+    origin: configCorsOrigin(),
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
   }
 })
@@ -65,9 +72,13 @@ io.on('connection', socket => {
     console.log('User Joined Room: ' + room)
   })
 
-  socket.on('typing', room => socket.in(room).emit('typing'))
+  socket.on('typing', room => {
+    socket.in(room).emit('typing')
+  })
 
-  socket.on('stop typing', room => socket.in(room).emit('stop typing'))
+  socket.on('stop typing', room => {
+    socket.in(room).emit('stop typing')
+  })
 
   socket.on('new message', newMessageReceived => {
     if (!newMessageReceived) {
