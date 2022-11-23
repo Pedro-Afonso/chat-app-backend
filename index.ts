@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import cors from 'cors'
 import express, { Request, Response } from 'express'
 import { createServer } from 'http'
 import { Server } from 'socket.io'
@@ -12,6 +13,29 @@ const app = express()
 
 // MongoDB uri
 const dbUri = process.env.DB_MONGO_URI
+
+// Solve Cors
+const corsOptions = () => {
+  if (process.env.NODE_ENV === 'PRODUCTION') {
+    const whitelist = [' https://pedro-afonso-chat-app.netlify.app/chat']
+
+    return {
+      origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+          callback(null, true)
+        } else {
+          callback(new Error('Not allowed by CORS'))
+        }
+      }
+    }
+  } else {
+    return {
+      origin: 'http://localhost:5173'
+    }
+  }
+}
+
+app.use(cors(corsOptions()))
 
 // Allow JSON and form data
 app.use(express.json())
@@ -36,33 +60,7 @@ if (dbUri) {
 
 const httpServer = createServer(app)
 
-const configCorsOrigin = () => {
-  if (process.env.NODE_ENV === 'PRODUCTION') {
-    const whitelist = [
-      'https://pedro-afonso-chat-app.netlify.app',
-      'http://pedro-afonso-chat-app.netlify.app'
-    ]
-    return {
-      origin: function (origin: any, callback: any) {
-        if (whitelist.indexOf(origin) !== -1) {
-          callback(null, true)
-        } else {
-          callback(new Error('Not allowed by CORS'))
-        }
-      }
-    }
-  } else {
-    return { origin: 'http://localhost:5173' }
-  }
-}
-
-//  Solve Cors
-
-const io = new Server(httpServer, {
-  cors: {
-    origin: '*'
-  }
-})
+const io = new Server(httpServer)
 
 io.on('connection', socket => {
   console.log(`Conectado! ${socket.id}`)
