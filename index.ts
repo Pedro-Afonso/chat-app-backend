@@ -38,11 +38,7 @@ const httpServer = createServer(app)
 
 const configCorsOrigin = () => {
   if (process.env.NODE_ENV === 'PRODUCTION') {
-    return [
-      process.env.ALLOWED_ORIGIN_1 || '',
-      process.env.ALLOWED_ORIGIN_2 || '',
-      process.env.ALLOWED_ORIGIN_3 || ''
-    ]
+    return 'https://pedro-afonso-chat-app.netlify.app/chat'
   } else {
     return 'http://localhost:5173'
   }
