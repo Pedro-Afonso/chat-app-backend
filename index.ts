@@ -59,7 +59,10 @@ const configCorsOrigin = () => {
 //  Solve Cors
 
 const io = new Server(httpServer, {
-  cors: { origin: 'https://pedro-afonso-chat-app.netlify.app' }
+  cors: {
+    origin: 'https://pedro-afonso-chat-app.netlify.app',
+    allowedHeaders: ['authorization']
+  }
 })
 
 io.on('connection', socket => {
