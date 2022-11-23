@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
-    "start": "ts-node ./index.ts",
+    "start": "node build/index.js",
+    "postinstall": "tsc",
     "lint": "eslint src --ext ts,tsx --max-warnings=0",
     "check-format": "prettier --check .",
+    "check-tsc": "tsc --noEmit --pretty",
     "format": "prettier --write .",
-    "test": "jest ./src/tests",
     "server": "nodemon ./index.ts"
   },
   "repository": {
