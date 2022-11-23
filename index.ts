@@ -39,18 +39,26 @@ const httpServer = createServer(app)
 
 const configCorsOrigin = () => {
   if (process.env.NODE_ENV === 'PRODUCTION') {
-    return 'https://pedro-afonso-chat-app.netlify.app'
+    const whitelist = [
+      'https://pedro-afonso-chat-app.netlify.app',
+      'http://pedro-afonso-chat-app.netlify.app'
+    ]
+    return {
+      origin: function (origin: any, callback: any) {
+        if (whitelist.indexOf(origin) !== -1) {
+          callback(null, true)
+        } else {
+          callback(new Error('Not allowed by CORS'))
+        }
+      }
+    }
   } else {
-    return 'http://localhost:5173'
+    return { origin: 'http://localhost:5173' }
   }
 }
 
 //  Solve Cors
-app.use(
-  cors({
-    origin: configCorsOrigin()
-  })
-)
+app.use(cors(configCorsOrigin()))
 
 const io = new Server(httpServer)
 
