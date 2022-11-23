@@ -17,7 +17,7 @@ const dbUri = process.env.DB_MONGO_URI
 // Solve Cors
 const corsOptions = () => {
   if (process.env.NODE_ENV === 'PRODUCTION') {
-    const whitelist = [' https://pedro-afonso-chat-app.netlify.app/chat']
+    const whitelist = ['https://pedro-afonso-chat-app.netlify.app/chat']
 
     return {
       origin: function (origin: any, callback: any) {
