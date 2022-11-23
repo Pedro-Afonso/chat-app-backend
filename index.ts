@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import express, { Request, Response } from 'express'
-import cors from 'cors'
 import { createServer } from 'http'
 import { Server } from 'socket.io'
 import mongoose from 'mongoose'
@@ -58,7 +57,6 @@ const configCorsOrigin = () => {
 }
 
 //  Solve Cors
-app.use(cors())
 
 const io = new Server(httpServer, {
   cors: configCorsOrigin()
