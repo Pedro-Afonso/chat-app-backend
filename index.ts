@@ -60,7 +60,7 @@ const configCorsOrigin = () => {
 
 const io = new Server(httpServer, {
   cors: {
-    origin: 'https://pedro-afonso-chat-app.netlify.app',
+    origin: ['https://pedro-afonso-chat-app.netlify.app'],
     allowedHeaders: ['authorization']
   }
 })
