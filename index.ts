@@ -58,7 +58,7 @@ const configCorsOrigin = () => {
 }
 
 //  Solve Cors
-app.use(cors(configCorsOrigin()))
+app.use(cors())
 
 const io = new Server(httpServer, {
   cors: configCorsOrigin()
