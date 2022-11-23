@@ -60,7 +60,9 @@ const configCorsOrigin = () => {
 //  Solve Cors
 app.use(cors(configCorsOrigin()))
 
-const io = new Server(httpServer)
+const io = new Server(httpServer, {
+  cors: { origin: 'https://pedro-afonso-chat-app.netlify.app' }
+})
 
 io.on('connection', socket => {
   console.log(`Conectado! ${socket.id}`)
