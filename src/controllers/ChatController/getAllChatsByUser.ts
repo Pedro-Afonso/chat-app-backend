@@ -29,16 +29,6 @@ export const getAllChatsByUser = async (req: Request, res: Response) => {
     .limit(100)
     .sort({ updatedAt: 'desc' })
     .populate(populateOptions)
-    .then(async docs => {
-      for (const doc of docs) {
-        if (req.user && doc.users[0] === req.user._id) {
-          doc.users.pop()
-        } else {
-          doc.users.shift()
-        }
-      }
-      return docs
-    })
 
   res.status(200).json(chat)
 }
