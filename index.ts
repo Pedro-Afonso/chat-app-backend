@@ -52,12 +52,7 @@ app.use(
   })
 )
 
-const io = new Server(httpServer, {
-  cors: {
-    origin: configCorsOrigin(),
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
-  }
-})
+const io = new Server(httpServer)
 
 io.on('connection', socket => {
   console.log(`Conectado! ${socket.id}`)
