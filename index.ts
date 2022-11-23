@@ -20,7 +20,7 @@ const corsOptions = () => {
     const whitelist = [' https://pedro-afonso-chat-app.netlify.app/chat']
 
     return {
-      origin: function (origin, callback) {
+      origin: function (origin: any, callback: any) {
         if (whitelist.indexOf(origin) !== -1) {
           callback(null, true)
         } else {
