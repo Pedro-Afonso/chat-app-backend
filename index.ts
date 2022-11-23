@@ -60,7 +60,9 @@ if (dbUri) {
 
 const httpServer = createServer(app)
 
-const io = new Server(httpServer)
+const io = new Server(httpServer, {
+  cors: { origin: ['https://pedro-afonso-chat-app.netlify.app'] }
+})
 
 io.on('connection', socket => {
   console.log(`Conectado! ${socket.id}`)
