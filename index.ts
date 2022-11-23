@@ -62,14 +62,21 @@ const io = new Server(httpServer, {
 io.on('connection', socket => {
   console.log(`Conectado! ${socket.id}`)
 
+  let userId = ''
+
   socket.on('setup', user => {
-    socket.join(user._id)
+    userId = user._id
+    socket.join(userId)
+
     socket.emit('connected')
   })
 
-  socket.on('join chat', room => {
-    socket.join(room)
-    console.log('User Joined Room: ' + room)
+  socket.on('join chat', ({ chatId, leave }) => {
+    if (leave) {
+      socket.leave(leave)
+    }
+    socket.join(chatId)
+    console.log('User Joined Room: ' + chatId)
   })
 
   socket.on('typing', room => {
