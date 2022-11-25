@@ -16,6 +16,7 @@ import {
   renameGroupChatValidation
 } from '../middlewares/chatValidation'
 import { handleValidations } from '../middlewares/handleValidations'
+import { errorHandler } from '../middlewares/errorHandler'
 import { authGuard } from '../middlewares/authGuard'
 
 const router = express()
@@ -42,5 +43,7 @@ router.put(
 )
 
 router.delete('/group/:groupId/users/:userId', authGuard, removeFromGroup)
+
+router.use(errorHandler)
 
 export { router as ChatRoutes }

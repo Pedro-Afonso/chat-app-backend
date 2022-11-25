@@ -14,8 +14,9 @@ import {
   userCreateValidation
 } from '../middlewares/userValidation'
 import { handleValidations } from '../middlewares/handleValidations'
-import { authGuard } from '../middlewares/authGuard'
+import { errorHandler } from '../middlewares/errorHandler'
 import { imageUpload } from '../middlewares/imageUpload'
+import { authGuard } from '../middlewares/authGuard'
 
 const router = express()
 
@@ -29,5 +30,7 @@ router.post(
   register
 )
 router.get('/', authGuard, getCurrentUser)
+
+router.use(errorHandler)
 
 export { router as UserRoutes }
