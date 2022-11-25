@@ -61,7 +61,7 @@ if (dbUri) {
 const httpServer = createServer(app)
 
 const io = new Server(httpServer, {
-  cors: { origin: ['https://pedro-afonso-chat-app.netlify.app'] }
+  cors: { origin: [process.env.ALLOWED_ORIGIN_1 || 'http://localhost:5173'] }
 })
 
 io.on('connection', socket => {
