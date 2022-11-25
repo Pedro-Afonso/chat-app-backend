@@ -1,12 +1,15 @@
 import { Request, Response } from 'express'
+
 import { ChatModel } from '../../models/ChatModel'
+import { AppError } from '../../config/AppError'
+import { tryCatch } from '../../utils/tryCatch'
 
 /**
   @description     Rename chat
   @route           PUT /api/chats/group/:id
   @access          Private
  */
-export const renameGroupChat = async (req: Request, res: Response) => {
+export const renameGroupChat = tryCatch(async (req: Request, res: Response) => {
   const { id: chatId } = req.params
 
   const { newChatName } = req.body
@@ -20,16 +23,12 @@ export const renameGroupChat = async (req: Request, res: Response) => {
 
   // Check if group chat exists
   if (!groupChat) {
-    res.status(404).json({ errors: ['Chat não encontrado'] })
-    return
+    throw new AppError(404)
   }
 
   // Check if group chat belongs to user
   if (!req.user || !groupChat.groupAdmin.equals(req.user._id)) {
-    res
-      .status(422)
-      .json({ errors: ['Ocorreu um erro, tente novamente mais tarde'] })
-    return
+    throw new AppError(400)
   }
 
   groupChat.name = newChatName
@@ -39,4 +38,4 @@ export const renameGroupChat = async (req: Request, res: Response) => {
   res
     .status(200)
     .json({ chat: groupChat, message: 'Nome do grupo alterado com sucesso!' })
-}
+})

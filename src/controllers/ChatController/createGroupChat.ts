@@ -1,18 +1,22 @@
 import { Request, Response } from 'express'
+
 import { ChatModel } from '../../models/ChatModel'
+import { AppError } from '../../config/AppError'
+import { tryCatch } from '../../utils/tryCatch'
 
 /**
   @description     Create a new group chat
   @route           POST /api/chats/group/
   @access          Private
  */
-export const createGroupChat = async (req: Request, res: Response) => {
+export const createGroupChat = tryCatch(async (req: Request, res: Response) => {
   const users = req.body.users
 
   if (users.length < 2) {
-    res.status(400).json({
-      errors: ['Para criar um grupo você precisa de pelo menos 2 pessoas!']
-    })
+    throw new AppError(
+      422,
+      'Para criar um grupo você precisa de pelo menos 2 pessoas!'
+    )
   }
 
   users.push(req.user)
@@ -36,4 +40,4 @@ export const createGroupChat = async (req: Request, res: Response) => {
   res
     .status(201)
     .json({ chat: groupChat, message: 'Grupo criado com sucesso!' })
-}
+})

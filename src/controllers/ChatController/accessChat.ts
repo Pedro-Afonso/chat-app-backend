@@ -1,19 +1,19 @@
 import { Request, Response } from 'express'
+
 import { ChatModel } from '../../models/ChatModel'
+import { AppError } from '../../config/AppError'
+import { tryCatch } from '../../utils/tryCatch'
 
 /**
   @description     Access or create a new chat
   @route           POST /api/chats/
   @access          Private
  */
-export const accessChat = async (req: Request, res: Response) => {
+export const accessChat = tryCatch(async (req: Request, res: Response) => {
   const { userId } = req.body
 
   if (!userId || !req.user) {
-    res
-      .status(422)
-      .json({ errors: 'Houve um erro, por favor tente mais tarde.' })
-    return
+    throw new AppError(400)
   }
 
   const filterOptions = {
@@ -34,7 +34,7 @@ export const accessChat = async (req: Request, res: Response) => {
 
   const chat = await ChatModel.find(filterOptions).populate(populateOptions)
   if (chat.length > 0) {
-    res.status(200).json({ chat: chat[0], message: 'Diga um Olá!' })
+    res.status(200).json({ chat: chat[0], message: '' })
     return
   }
 
@@ -49,4 +49,4 @@ export const accessChat = async (req: Request, res: Response) => {
   await createdChat.populate('users', '-password')
 
   res.status(201).json({ chat: createdChat, message: 'Inicie uma conversa.' })
-}
+})
