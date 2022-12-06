@@ -15,7 +15,7 @@ const app = express()
 const dbUri = process.env.DB_MONGO_URI
 
 // Solve Cors
-const corsOptions = () => {
+/* const corsOptions = () => {
   if (process.env.NODE_ENV === 'PRODUCTION') {
     const whitelist = ['https://pedro-afonso-chat-app.netlify.app']
 
@@ -33,9 +33,9 @@ const corsOptions = () => {
       origin: 'http://localhost:5173'
     }
   }
-}
+} */
 
-app.use(cors(corsOptions()))
+app.use(cors())
 
 // Allow JSON and form data
 app.use(express.json())
@@ -61,7 +61,7 @@ if (dbUri) {
 const httpServer = createServer(app)
 
 const io = new Server(httpServer, {
-  cors: { origin: [process.env.ALLOWED_ORIGIN_1 || 'http://localhost:5173'] }
+  cors: { origin: ['https://pedro-afonso-chat-app.netlify.app'] }
 })
 
 io.on('connection', socket => {
