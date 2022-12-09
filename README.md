@@ -76,9 +76,9 @@ Este projeto tem o objetivo de facilitar a comunicação em tempo real através 
 
 ✅ [Cloudinary](https://cloudinary.com) - Usado para fazer o upload de imagens.
 
-✅ [Mongoose](https://mongoosejs.com) - Biblioteca usada para criar as conecções com o MongoDB.
+✅ [Mongoose](https://mongoosejs.com) - Biblioteca usada para a modelagem de dados de objeto para MongoDB e NodeJS.
 
-✅ [MongoDB](https://www.mongodb.com) - Sistema gerenciador de banco de dados noSQL.
+✅ [MongoDB](https://www.mongodb.com) - Sistema gerenciador de banco de dados NoSQL.
 
 ✅ [Lints] — ESlint/Prettier/EditorConfig
 
