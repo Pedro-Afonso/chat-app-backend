@@ -6,6 +6,8 @@ import { Server } from 'socket.io'
 import mongoose from 'mongoose'
 import 'dotenv/config'
 
+import { AppSocket } from './src/config/AppSocket'
+
 import { router } from './src/routes/Router'
 
 const port = process.env.PORT || '5000'
@@ -64,52 +66,9 @@ const io = new Server(httpServer, {
   cors: { origin: [process.env.ALLOWED_ORIGIN_1 || 'http://localhost:5173'] }
 })
 
-io.on('connection', socket => {
-  console.log(`Conectado! ${socket.id}`)
-
-  let userId = ''
-
-  socket.on('setup', user => {
-    userId = user._id
-    socket.join(userId)
-
-    socket.emit('connected')
-  })
-
-  socket.on('join chat', ({ chatId, leave }) => {
-    if (leave) {
-      socket.leave(leave)
-    }
-    socket.join(chatId)
-    console.log('User Joined Room: ' + chatId)
-  })
-
-  socket.on('typing', room => {
-    socket.in(room).emit('typing')
-  })
-
-  socket.on('stop typing', room => {
-    socket.in(room).emit('stop typing')
-  })
-
-  socket.on('new message', newMessageReceived => {
-    if (!newMessageReceived) {
-      console.log('Mensagem vazia!')
-      return
-    }
-    if (!newMessageReceived.chat && !newMessageReceived.chat.users) {
-      console.log('Ocorreu um erro!')
-      return
-    }
-    const users = newMessageReceived.chat.users
-    users.forEach(({ _id }: any) => {
-      if (_id === newMessageReceived.sender._id) return
-
-      socket.in(_id).emit('message received', newMessageReceived)
-    })
-  })
+httpServer.listen(port, () => {
+  AppSocket({ io })
+  console.log('App is working!')
 })
-
-httpServer.listen(port, () => console.log('App is working!'))
 
 export { httpServer as app }
